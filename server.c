@@ -1,5 +1,6 @@
 #include "Utility.h"
 #include <stdio.h>
+#include <unistd.h>
 
 #define BACKLOG 1
 
@@ -26,11 +27,14 @@ int main(int argc, char *argv[]) {
   while (1) {
     client_fd = accept(server_fd, NULL, NULL);
 
-    if (!client_fd)
+    if (client_fd == -1)
       errExit("Socket Client");
-  }
 
-  printf("FD of client: %d\n", client_fd);
+    printf("FD of client in server: %d\n", client_fd);
+
+    if (close(client_fd) == -1)
+      errExit("close");
+  }
 
   return 0;
 }
