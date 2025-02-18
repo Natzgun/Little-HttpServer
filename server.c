@@ -34,8 +34,9 @@ int main(int argc, char *argv[]) {
 
     printf("FD of client in server: %d\n", client_fd);
 
-    read(client_fd, buff, BUF_SIZE);
-    printf("Client %d: %s", client_fd, buff);
+    while (read(client_fd, buff, BUF_SIZE) > 0) {
+      printf("Client %d: %s", client_fd, buff);
+    }
 
     if (close(client_fd) == -1)
       errExit("close");
